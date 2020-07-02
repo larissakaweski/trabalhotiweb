@@ -23,6 +23,7 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#verificador">Verificador</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#alerta">Denúncia</a></li>
+                        <li id="opcaoSair" style="display: none" class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" onclick="deslogar()" >Sair <i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -57,15 +58,112 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">Informe o status desse site</p>
-                <input class="form-control mt-4" id="urlInformacao" type="text" placeholder="Insira a URL" required="required" data-validation-required-message="Please enter your name." />  
                 <div class="form-group">
-                    <button onClick="pegandoURLParInformar('semreclamacao')" class="btn btn-secondary mt-4 btn-xl" id="SemReclamacaoButton" type="submit">Sem Reclamação</button>
-                    <button onClick="pegandoURLParInformar('duvidoso')" class="btn btn-secondary mt-4 btn-xl" id="DuvidosoButton" type="submit">Duvidoso</button>
-                    <button onClick="pegandoURLParInformar('acusar')" class="btn btn-secondary mt-4 btn-xl" id="AcusarButton" type="submit">Acusar</button>
+                    <button class="btn btn-secondary mt-4 btn-xl" data-toggle="modal" data-target="#mensagemModal" type="submit">Fazer Denúncia</button>
                 </div>
             </div>
         </header>
+        <div class="modal fade" id="mensagemModal" tabindex="-1" role="dialog" aria-labelledby="mensagemLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="mensagemLabel">Fazer Denúncia</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Insira a URL:</label> 
+                      <input type="text" class="form-control" id="urlInformacao" required="required">
+                    </div>
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Informe o motivo:</label>
+                      <textarea class="form-control" id="mensagemInput"></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                    <button onClick="pegandoURLParInformar('semreclamacao')" class="btn btn-secondary mt-4 btn-xl" id="SemReclamacaoButton" type="submit">Sem Reclamação</button>
+                    <button onClick="pegandoURLParInformar('duvidoso')" class="btn btn-secondary mt-4 btn-xl" id="DuvidosoButton" type="submit">Duvidoso</button>
+                    <button onClick="pegandoURLParInformar('acusar')" class="btn btn-secondary mt-4 btn-xl" id="AcusarButton"type="submit">Acusar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                </div>
+                <form onsubmit="login(event)" >
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">E-mail:</span>
+                            </div>
+                            <input required id="emailL" type="email" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Senha:</span>
+                            </div>
+                            <input required id="senhaL" type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#cadastrarModal">Cadastrar</button>
+                        <button type="submit" class="btn btn-primary" >Entrar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <div class="modal fade" id="cadastrarModal" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar</h5>
+                </div>
+                <form onsubmit="cadastrar(event)">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Nome Completo:</span>
+                            </div>
+                            <input id="nomeC" required type="text" class="form-control" placeholder="Name" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">E-mail:</span>
+                            </div>
+                            <input id="emailC" required type="email" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Senha:</span>
+                            </div>
+                            <input id="senha1C"required type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Digite novamente a senha:</span>
+                            </div>
+                            <input id="senha2C" required type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                          </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"data-dismiss="modal">Voltar</button>
+                        <button type="submit" class="btn btn-primary" >Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+       
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -77,11 +175,30 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
-                <div id = "resposta" class="modal-body">
-                
+                <div class="modal-body">
+                <span id = "resposta1"> </span><br></br><br></br>
+                <span id = "resposta2"> </span><br></br>
+                <span id = "resposta3"> </span><br></br>
+                <span id = "resposta4"> </span><br></br>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="alertModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Informação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body" id="alertMensagem" >
+                    
                 </div>
             </div>
             </div>
@@ -206,23 +323,37 @@
                 url = url.replace("www.", "")
                 if(url.indexOf('/') != -1){ //se tiver barra ele vai pegar a posição de onde tem a barra
                     url = url.substring(0, url.indexOf('/'))//vai fazer aparecer da posição 0 até a primeira barra
-                }                
+                }  
+
 
 
                 var tanalista = false
                 for(var i = 0; i < sites.length; i++){//percorre totas as listas jsons
                     if(url == sites[i].url){//verifica se ta na lista
                         tanalista = true
-                        var pontuacaoAtual = sites[i].pontos//pega a pontuação
-
-                        if(pontuacaoAtual > 3){//verificação de pontuação para o aparecimento do modal
-                            document.querySelector('#resposta').innerHTML = ("Esse site foi verificado como CONFIAVEL")               
-                        }else if(pontuacaoAtual <= 3 && pontuacaoAtual >= -3){
-                            document.querySelector('#resposta').innerHTML = ("Esse site foi verificado como DUVIDOSO")
+                        var pontuacaoFinal = sites[i].pontuacaoFinal//pega a pontuação
+                        let resposta = [0,0,0]
+                            sites[i].denuncias.forEach(element => {
+                                if(element.tipo == "semreclamacao")
+                                    resposta[0]++;
+                                else if(element.tipo == "duvidoso")
+                                    resposta[1]++;
+                                else
+                                    resposta[2]++; 
+                            });
+                        
+                        if(pontuacaoFinal > 3){//verificação de pontuação para o aparecimento do modal
+                            document.querySelector('#resposta1').innerHTML = ("Acreditamos que este site é CONFIÁVEL")      
+                        }else if(pontuacaoFinal <= 3 && pontuacaoFinal >= -3){
+                            document.querySelector('#resposta1').innerHTML = ("Acreditamos que este site é DUVIDOSO")
                         }else{
-                            document.querySelector('#resposta').innerHTML = ("Esse site foi verificado como ACUSADO")
+                            document.querySelector('#resposta1').innerHTML = ("Acreditamos que este site é MALICIOSO")
                         }
                         
+                        document.querySelector('#resposta2').innerHTML = (`${resposta[0]} avaliações em SEM RECLAMAÇÕES`)               
+                        document.querySelector('#resposta3').innerHTML = (`${resposta[1]} avaliações em DUVIDOSO`)               
+                        document.querySelector('#resposta4').innerHTML = (`${resposta[2]} avaliações em MALICIOSO`) 
+
                         break
                     }
                 }
@@ -236,25 +367,45 @@
             
             function pegandoURLParInformar(informacao){//pegando como parâmetro status
                 var url = document.querySelector("#urlInformacao").value
+                var mensagem = mensagemInput.value;
+                if(url == "" || mensagem == ""){
+                   alertMensagem.innerHTML = "Preencha todos os campos!";
+                $("#alertModal").modal("show");
+                    return false;
+                }
                 url = url.replace("https://", "")
                 url = url.replace("http://", "")
                 url = url.replace("www.", "")
                 if(url.indexOf('/') != -1){
                     url = url.substring(0, url.indexOf('/'))
                 }  
+                const avaliacao = {
+                    "idUsuario": JSON.parse(localStorage.getItem("logado")).id,
+                    "tipo": informacao,
+                    "mensagem": mensagemInput.value,
+                };
                 var tanalista = false
+                /*
+                    localSorage chamado Avaliações[{url, denúncias[{tipo, pontuação, idLogado, mensagem}], pontuaçãoFinal }];
+                */
 
-                for(var i = 0; i < sites.length; i++){
-                   if( url == sites[i].url ){
+                for(var i = 0; i < sites.length; i++){//um objeto já criado
+                   if( url == sites[i].url ){//verifica se já existe
                         switch(informacao){
                             case "semreclamacao":
-                                sites[i].pontos++;
+                                avaliacao.pontuacao = 1;
+                                sites[i].denuncias.push(avaliacao);
+                                sites[i].pontuacaoFinal++;
                                 break;
                             case "duvidoso":
-                                sites[i].pontos--
+                                avaliacao.pontuacao = -1;
+                                sites[i].denuncias.push(avaliacao);
+                                sites[i].pontuacaoFinal--;
                                 break;
                             case "acusar":
-                                sites[i].pontos -= 2
+                                avaliacao.pontuacao = -2;
+                                sites[i].denuncias.push(avaliacao);
+                                sites[i].pontuacaoFinal -= 2;
                                 break;
                         }
                         tanalista = true
@@ -264,16 +415,22 @@
                 }
 
                 if(tanalista == false){
-                    sites.push( {"url": url, "pontos": 0} ) 
+                    sites.push( {"url": url, "pontuacaoFinal": 0, "denuncias":[]} ) 
                     switch(informacao){
                         case "semreclamacao":
-                            sites[sites.length - 1].pontos++
+                            avaliacao.pontuacao = 1;
+                            sites[sites.length - 1].denuncias.push(avaliacao);
+                            sites[sites.length - 1].pontuacaoFinal++;
                             break;
                         case "duvidoso":
-                            sites[sites.length - 1].pontos--
+                            avaliacao.pontuacao = -1;
+                            sites[sites.length - 1].denuncias.push(avaliacao);
+                            sites[sites.length - 1].pontuacaoFinal--;
                             break;
                         case "acusar":
-                            sites[sites.length - 1].pontos -= 2
+                            avaliacao.pontuacao = -2;
+                            sites[sites.length - 1].denuncias.push(avaliacao);
+                            sites[sites.length - 1].pontuacaoFinal -= 2;
                             break;
                     }                   
                 }
@@ -283,6 +440,11 @@
 
                 localStorage.setItem("ListasDeSites", JSON.stringify(sites))//atualizando o local storage com novas informações
                 console.log(sites)
+                $("#mensagemModal").modal("hide");
+                urlInformacao.value = "";
+                mensagemInput.value = "";
+                alertMensagem.innerHTML = "Sua avaliação foi registrada com sucesso!";
+                $("#alertModal").modal("show");
             }
 
             /*
